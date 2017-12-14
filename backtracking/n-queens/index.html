@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>N Queens Problem Solution</title>
+    <script src="../../helpers/import.js"></script>
+    <script src="solution.js"></script>
+</head>
+<body>
+    <div class="chess-wrapper">
+        <div id="chess6"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess8"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess9"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess10"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess11"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess12"></div>
+    </div>
+    <script>
+        App.ready().then((modules) => {
+            function solveChess(size, container){
+
+                let queenProblemSolver = new modules.NQueensProblemSolver(size);
+                queenProblemSolver.on('solution', (solution)=>{
+                    console.log('solution', solution, size);
+                    container.innerHTML = '';
+                    for (let i = 0; i < size; i++){
+                        for (let j = 0; j < size; j++){
+                            let square = document.createElement('span');
+                            square.classList.add('square');
+                            if(solution[i] === j){
+                                square.classList.add('queen');
+                            }
+                            container.appendChild(square);
+                        }
+                    }
+                });
+                console.time('time' + size);
+                queenProblemSolver.search();
+                console.timeEnd('time' + size);
+            }
+            requestAnimationFrame(()=>{
+                solveChess(6, chess6);
+                requestAnimationFrame(()=>{
+                    solveChess(8, chess8);
+                    requestAnimationFrame(()=>{
+                        solveChess(9, chess9);
+                        requestAnimationFrame(()=>{
+                            solveChess(10, chess10);
+                            requestAnimationFrame(()=>{
+                                solveChess(11, chess11);
+                                requestAnimationFrame(()=>{
+                                   // solveChess(12, chess12);
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
