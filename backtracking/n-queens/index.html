@@ -8,27 +8,28 @@
 </head>
 <body>
     <div class="chess-wrapper">
-        <div id="chess6"></div>
+        <div id="chess6" class="chess"></div>
     </div>
     <div class="chess-wrapper">
-        <div id="chess8"></div>
+        <div id="chess8" class="chess"></div>
     </div>
     <div class="chess-wrapper">
-        <div id="chess9"></div>
+        <div id="chess9" class="chess"></div>
     </div>
     <div class="chess-wrapper">
-        <div id="chess10"></div>
+        <div id="chess10" class="chess"></div>
     </div>
     <div class="chess-wrapper">
-        <div id="chess11"></div>
+        <div id="chess11" class="chess"></div>
     </div>
     <div class="chess-wrapper">
-        <div id="chess12"></div>
+        <div id="chess12" class="chess"></div>
     </div>
     <script>
         App.ready().then((modules) => {
             function solveChess(size, container){
-
+                container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+                container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
                 let queenProblemSolver = new modules.NQueensProblemSolver(size);
                 queenProblemSolver.on('solution', (solution)=>{
                     console.log('solution', solution, size);

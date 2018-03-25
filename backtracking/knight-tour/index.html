@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Knight Tour Problem Solution</title>
+    <script src="../../helpers/import.js"></script>
+    <script src="solution.js"></script>
+</head>
+<body>
+    <div class="chess-wrapper">
+        <div id="chess6" class="chess"></div>
+    </div>
+    <div class="chess-wrapper">
+        <div id="chess8" class="chess"></div>
+    </div>
+    <script>
+        App.ready().then((modules) => {
+            function solveChess(size, container){
+                return new Promise((resolve, reject) => {
+                    container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+                    container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+                    let knightProblemSolver = new modules.NKnightProblemSolver(size);
+                    knightProblemSolver.on('solution', (solution)=>{
+                        console.log('solution', solution, size);
+                        container.innerHTML = '';
+                        for (let i = 0; i < size; i++){
+                            for (let j = 0; j < size; j++){
+                                let square = document.createElement('span');
+                                square.classList.add('square');
+                                square.innerHTML = `<span>${solution[i][j] || '-'}</span>`;
+                                container.appendChild(square);
+                            }
+                        }
+                        resolve();
+                    });
+                    console.time('time' + size);
+                    knightProblemSolver.search();
+                    console.timeEnd('time' + size);
+                });
+            }
+        requestAnimationFrame(()=>{
+            solveChess(6, chess6);
+            requestAnimationFrame(()=>{
+                solveChess(8, chess8);
+            });
+        });
+    });
+    </script>
+</body>
+</html>
